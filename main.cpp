@@ -1,19 +1,14 @@
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <cmath>
-#include <fstream>
-#include <ctype.h>
-#include <cstdlib>
+#include <bits/stdc++.h>
 #include <windows.h>
-#include <ctime>
 #include <direct.h>
-#include <sstream>
-#include <chrono>
-#include <thread>
 #include <conio.h>
 #include <sys/time.h>
+
 using namespace std;
+
+const string musicDirectory = "music/";
+const string lyricsDirectory = "lyrics/";
+
 int string_part_compare(string a, string b)
 {
     int fi, fj = 0, fl1, fl2, fr = 5;
@@ -147,41 +142,41 @@ int main()
     time2 << mm1;
     month = time2.str();
     fstream myfile;
-    myfile.open("name.txt", ios::in);
+    myfile.open("assets/userName.txt", ios::in);
     while (getline(myfile, name[1]))
     {
     }
     myfile.close();
-    myfile.open("name2.txt", ios::in);
+    myfile.open("assets/assistantName.txt", ios::in);
     while (getline(myfile, name[0]))
     {
     }
     myfile.close();
-    myfile.open("eden.txt", ios::in);
+    myfile.open("assets/eden.txt", ios::in);
     while (getline(myfile, store[k]))
     {
         k++;
     }
     myfile.close();
-    myfile.open("day.txt", ios::in);
+    myfile.open("assets/day.txt", ios::in);
     myfile >> day2;
     myfile.close();
     kk = 0;
-    myfile.open("question.txt", ios::in);
+    myfile.open("assets/question.txt", ios::in);
     while (getline(myfile, question[kk]))
     {
         kk++;
     }
     myfile.close();
     kk = 0;
-    myfile.open("answer.txt", ios::in);
+    myfile.open("assets/answer.txt", ios::in);
     while (getline(myfile, answer[kk]))
     {
         kk++;
     }
     myfile.close();
     cout << "\n\t\t\t\t\t\t\tWelcome\n\t\t\t\t\t\t\t-------\n\t\t\t\t\t\t\t\t\t\t\t\t\t" << hour << ":" << minutes << "\n\t\t\t\t\t\t\t\t\t\t\t\t" << dd1 << "-" << mm1 << "-" << yy1 << "\n\t\t\t\t\t\t\t\t\t\t\t\t---------";
-    PlaySound(TEXT("Robot voice 2 - welcome__preview.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    PlaySound(TEXT("assets/welcome.wav"), NULL, SND_FILENAME | SND_ASYNC);
     cout << "\n\t" << name[0] << " : Hello... " << name[1] << ". How can I help?\n";
     while (1)
     {
@@ -242,7 +237,7 @@ int main()
                         {
                             name[1][0] = 'A' + name[1][0] - 'a';
                         }
-                        myfile.open("name.txt", ios::out);
+                        myfile.open("assets/userName.txt", ios::out);
                         myfile << name[1];
                         myfile.close();
                         cout << "\t" << name[0] << " : So... " << name[1] << ", How can I help?\n";
@@ -255,7 +250,7 @@ int main()
                         {
                             name[0][0] = 'A' + name[0][0] - 'a';
                         }
-                        myfile.open("name2.txt", ios::out);
+                        myfile.open("assets/assistantName.txt", ios::out);
                         myfile << name[0];
                         myfile.close();
                     }
@@ -345,7 +340,7 @@ int main()
             inpt2 = string_part_copy(main_inpt, question7);
             inpt3 = inpt2;
             song_name = inpt2;
-            inpt2 += ".wav";
+            inpt2 = musicDirectory + inpt2 + ".wav";
             if (PlaySound(TEXT(inpt2.c_str()), NULL, SND_FILENAME | SND_ASYNC))
             {
                 cout << "\t" << name[0] << " : Playing music " << inpt3 << "...\n";
@@ -360,7 +355,7 @@ int main()
             gettimeofday(&detail_time, NULL);
             times2 = ((timePtr->tm_hour * 360000) + (timePtr->tm_min * 6000) + (timePtr->tm_sec * 100) + (detail_time.tv_usec / 10000));
             kk1 = 0;
-            inpt2 = song_name + ".txt";
+            inpt2 = lyricsDirectory + song_name + ".txt";
             myfile.open(inpt2.c_str(), ios::in);
             if (myfile.is_open())
             {
@@ -393,7 +388,7 @@ int main()
         {
             song_name = string_part_copy(main_inpt, question12);
             kk1 = 0;
-            inpt2 = song_name + ".txt";
+            inpt2 = lyricsDirectory + song_name + ".txt";
             myfile.open(inpt2.c_str(), ios::in);
             if (myfile.is_open())
             {
@@ -503,7 +498,7 @@ int main()
             if (day1 != day2)
             {
                 store[k] = "\t\t\t\t\t\t\t" + day1 + "-" + month + "-" + year;
-                myfile.open("eden.txt", ios::app);
+                myfile.open("assets/eden.txt", ios::app);
                 myfile << "" << store[k] << "\n";
                 myfile.close();
                 k++;
@@ -519,11 +514,11 @@ int main()
                 {
                     store[k] = "\t\t\t\t\t\t\t---------";
                 }
-                myfile.open("eden.txt", ios::app);
+                myfile.open("assets/eden.txt", ios::app);
                 myfile << "" << store[k] << "\n";
                 myfile.close();
                 k++;
-                myfile.open("day.txt", ios::out);
+                myfile.open("assets/day.txt", ios::out);
                 myfile << day1;
                 myfile.close();
                 day2 = day1;
@@ -535,13 +530,12 @@ int main()
                             "" +
                        main_inpt.substr(i + 13, len1 - (i + 13));
             cout << "\t" << name[0] << " : Okay... I'll remember that.\n";
-            myfile.open("eden.txt", ios::app);
+            myfile.open("assets/eden.txt", ios::app);
             myfile << "" << store[k] << "\n";
             myfile.close();
             u = 0;
             k++;
             l = k - 1;
-            break;
         }
         r = 1;
         r1 = 1;
@@ -608,7 +602,7 @@ int main()
                         {
                             main_inpt[i] = tolower(main_inpt[i]);
                         }
-                        myfile.open("question.txt", ios::app);
+                        myfile.open("assets/question.txt", ios::app);
                         myfile << "" << question[kk] << "\n";
                         ;
                         myfile.close();
@@ -660,7 +654,7 @@ int main()
                         {
                             answer[kk][0] = 'A' + answer[kk][0] - 'a';
                         }
-                        myfile.open("answer.txt", ios::app);
+                        myfile.open("assets/answer.txt", ios::app);
                         myfile << "" << answer[kk] << "\n";
                         ;
                         myfile.close();
@@ -679,7 +673,7 @@ int main()
         if (s2 == 0)
         {
             i = 0;
-            myfile.open("question.txt", ios::out);
+            myfile.open("assets/question.txt", ios::out);
             while (i < kk)
             {
                 myfile << "" << question[i] << "\n";
